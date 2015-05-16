@@ -12,7 +12,7 @@ class LoginForm(Form):
 	        self.user = None
 
 
-	def validate(self):
+	def validate_on_submit(self):
 		rv = Form.validate(self)
 		if not rv:
 			return False

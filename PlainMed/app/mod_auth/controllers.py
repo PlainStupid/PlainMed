@@ -16,7 +16,8 @@ def index():
 
 @mod_auth.route("/login", methods=["GET", "POST"])
 def login():
-	form = LoginForm(request.form)
+	form = LoginForm()
+
 	if form.validate_on_submit():
 		flash("Successfully login as %s" % form.user.username)
 		session["user_id"] = form.user.id
@@ -30,3 +31,5 @@ def signup():
 	newUser = User("ragnar", "ragnar")
 	db.session.add(newUser)
 	db.session.commit()
+
+	return redirect(url_for("auth.login"))
