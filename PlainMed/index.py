@@ -11,7 +11,10 @@ def myMeds():
 def getMeds():
 	req = urllib.request.Request('http://lyfjaver.is/lyfjaskra')
 	response = urllib.request.urlopen(req)
-	return response
+	bsoup = BeautifulSoup(response)
+	tables = bsoup.findAll('td', {'class': 'row1'})
+
+	return tables
 
 @app.route('/SignIn')
 def singIn():

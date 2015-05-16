@@ -4,5 +4,7 @@
 
 <h1> Meds Here </h1>
 
-{{ data }}
+{% for d in data %}
+<p>{{d.string}}</p>
+{% endfor %}
 {% endblock %}
