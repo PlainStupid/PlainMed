@@ -3,6 +3,7 @@ from jinja2 import TemplateNotFound
 from app.mod_auth.forms import LoginForm
 from werkzeug import check_password_hash, generate_password_hash
 from app.mod_auth.models import User
+from app import db
 
 mod_auth = Blueprint("auth", __name__, url_prefix="/auth", template_folder="templates")
 
@@ -22,3 +23,10 @@ def login():
 		return redirect(url_for("index.index"))
 
 	return render_template("login.html", form=form)
+
+
+@mod_auth.route("/signup", methods=["GET", "POST"])
+def signup():
+	newUser = User("ragnar", "ragnar")
+	db.session.add(newUser)
+	db.session.commit()

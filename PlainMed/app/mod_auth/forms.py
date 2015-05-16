@@ -1,5 +1,7 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, validators
+from app.mod_auth.models import User
+from werkzeug import check_password_hash, generate_password_hash
 
 class LoginForm(Form):
 	username = StringField('Username', [validators.Required()])
@@ -21,7 +23,7 @@ class LoginForm(Form):
 			self.username.errors.append("Unknown username")
 			return False
 
-		if not user.check_password(self.password.data):
+		if not check_password_hash(user.password, self.password.data):
 			self.password.error.append("Invalid password")
 			return False
 
