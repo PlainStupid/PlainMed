@@ -12,12 +12,14 @@ class LoginForm(Form):
 	        self.user = None
 
 
-	def validate_on_submit(self):
+	def validate(self):
 		rv = Form.validate(self)
 		if not rv:
+			print("No rv")
 			return False
 
 		user = User.query.filter_by(username=self.username.data).first()
+		print(user)
 
 		if user is None:
 			self.username.errors.append("Unknown username")

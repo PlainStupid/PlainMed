@@ -9,7 +9,7 @@
       <h1>Please login</h1>
       <br>
       <form action="{{url_for('auth.login')}}" method="post">
-
+        {{ form.hidden_tag() }}
         <div class="form-group">
           {{ form.username(class="form-control", placeholder="Username") }}
         </div>
