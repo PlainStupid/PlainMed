@@ -26,7 +26,6 @@ def signUp():
 
 @app.route('/Med/<medication>')
 def med(medication):
-	print(getMeds())
 	if medication in getMeds():
 		return render_template('med.html', med=medication)
 	else:

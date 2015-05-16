@@ -1,11 +1,13 @@
 {% extends "home.html" %}
 
 {% block content %} 
-
-<h1> Meds Here </h1>
-
-{% for d in data %}
-	<p><a href='Med/{{d}}'>{{d.string}}</a></p>
-{% endfor %}
+<h1> Medications</h1>
+<div class='container'>
+	<div class="row" id="list">
+		{% for d in data %}
+			<div class="col-md-4"><a href='Med/{{d}}' class='cell'>{{d.string}}</a></div>
+		{% endfor %}
+	</div>
+</div>
 
 {% endblock %}
