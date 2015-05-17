@@ -12,8 +12,13 @@
             <li><a href="/mymeds">MyMeds</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/auth/login">Sign In</a></li>
-            <li><a href="/auth/signup">Sign Up</a></li>
+            {% if not user%}
+              <li><a href="/auth/login">Sign In</a></li>
+              <li><a href="/auth/signup">Sign Up</a></li>
+            {% else %}
+              <li><a>Logged in as: {{user.username}}</a></li>
+              <li><a href="/auth/logout">Sign out</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
