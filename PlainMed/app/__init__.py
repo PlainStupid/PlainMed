@@ -23,6 +23,11 @@ from app.mod_auth.models import User
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
+
+import jinja2
+template_dir = './templates'
+loader = jinja2.FileSystemLoader(template_dir)
+environment = jinja2.Environment(loader=loader)
     
 # Import a module / component using its blueprint handler variable
 from app.mod_index.controllers import mod_index as index_module
