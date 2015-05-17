@@ -22,5 +22,7 @@
     {{ form.password_again(class="form-control", placeholder="Password again") }}
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+  <br>
+  <p> or <a href="{{ url_for('auth.login')}}">Login</a></p>
 </form>
 {%- endblock -%}

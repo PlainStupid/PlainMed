@@ -38,9 +38,11 @@ environment = jinja2.Environment(loader=loader)
 # Import a module / component using its blueprint handler variable
 from app.mod_index.controllers import mod_index as index_module
 from app.mod_auth.controllers import mod_auth as authentication_module
+from app.mod_med.controllers import mod_med as medicine_module
 
 # Register blueprints
 app.register_blueprint(index_module)
 app.register_blueprint(authentication_module)
+app.register_blueprint(medicine_module)
 
 db.create_all()
