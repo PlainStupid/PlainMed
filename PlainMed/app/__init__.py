@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 # 
-from flask import Flask, flash, redirect, url_for, request, get_flashed_messages, render_template, session, g
-from flask.ext.login import LoginManager, current_user, login_user, logout_user, login_required
-import rlcompleter, pdb
+from flask import Flask, redirect, url_for, render_template, g
+from flask.ext.login import LoginManager, current_user
 from flask.ext.sqlalchemy import SQLAlchemy
 import jinja2
 
@@ -18,6 +17,7 @@ db = SQLAlchemy(app)
 @app.errorhandler(404)
 def not_found(error):
     return render_template("404.html"), 404
+
 
 from app.mod_auth.models import User
 

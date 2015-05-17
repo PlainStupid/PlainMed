@@ -5,6 +5,7 @@ from app.mod_auth.models import User
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from werkzeug import check_password_hash
 
+
 class LoginForm(Form):
     username = StringField('Username', [DataRequired()])
     password = PasswordField('Password', [DataRequired()])
@@ -21,8 +22,8 @@ class LoginForm(Form):
             raise ValidationError("Invalid password")
 
 
-
 class SignupForm(Form):
     username = StringField('Username', [validators.DataRequired()])
-    password = PasswordField('Password', [validators.DataRequired(), validators.EqualTo('password_again', message='Passwords must match')])
+    password = PasswordField('Password', [validators.DataRequired(),
+                                          validators.EqualTo('password_again', message='Passwords must match')])
     password_again = PasswordField('Password again', [validators.DataRequired()])
