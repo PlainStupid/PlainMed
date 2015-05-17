@@ -1,6 +1,16 @@
 {% extends "home.html" %}
 
 {% block content %} 
-<h1>MyMeds Here</h1>
-
+<h1>My Medications</h1>
+{% for m in meds %}
+<div class='container'>
+	<h2>{{m.med}}</h2>
+	{% if m.amount == 1 %}
+		<h3> You Should Take {{m.amount}} Pill Of <i>{{m.med}}</i> {{m.intake}}</h3>
+	{% else %}
+		<h3> You Should Take {{m.amount}} Pills Of <i>{{m.med}}</i> {{m.intake}}</h3>
+	{% endif %}
+	<h3> Your Notes: {{m.notes}}</h3>
+</div>
+{% endfor %}
 {% endblock %}

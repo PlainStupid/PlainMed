@@ -3,6 +3,8 @@ from flask.ext.login import LoginManager, current_user, login_user, logout_user,
 from bs4 import BeautifulSoup
 import urllib.request
 from wtforms import Form, IntegerField, TextField, PasswordField, validators, SelectField
+from app import db
+from app.mod_index.models import Med
 
 mod_index = Blueprint("index", __name__, url_prefix="/", template_folder="templates")
 
@@ -32,7 +34,10 @@ def med(medication):
 	form = RegistrationForm(request.form)
 
 	if request.method == 'POST' and form.validate():
-		return render_template('mymeds.html')
+		newMed = Med(str(current_user), medication, form.amount.data, form.intake.data, form.notes.data)
+		db.session.add(newMed)
+		db.session.commit()
+		return render_template('mymeds.html', meds=Med.query.filter_by(user=str(current_user)))
 
 	return render_template('med.html', med=medication, form=form)
 
@@ -40,10 +45,10 @@ def med(medication):
 @mod_index.route('mymeds')
 @login_required
 def mymeds():
-	return render_template('mymeds.html')
+	return render_template('mymeds.html', meds=Med.query.filter_by(user=str(current_user)))
 
 # The Form that is filled to register new meds
 class RegistrationForm(Form):
     amount = IntegerField('Amount', [validators.required(), validators.NumberRange(min=1)])
-    intake = SelectField(u'Intake', choices=[('1', 'Daily'), ('2', 'Every other day'), ('3', 'Weekly'), ('4', 'By need')])
+    intake = SelectField(u'Intake', choices=[('Daily', 'Daily'), ('Every Other Day', 'Every other day'), ('Wekkly', 'Weekly'), ('By Need', 'By need')])
     notes = TextField('Notes', [validators.optional()])
