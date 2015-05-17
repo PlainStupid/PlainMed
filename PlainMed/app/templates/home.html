@@ -12,11 +12,11 @@
             <li><a href="/mymeds">MyMeds</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            {% if not user%}
+            {% if not g.user.is_authenticated() %}
               <li><a href="/auth/login">Sign In</a></li>
               <li><a href="/auth/signup">Sign Up</a></li>
             {% else %}
-              <li><a>Logged in as: {{user.username}}</a></li>
+              <li><a>Logged in as: {{g.user.username}}</a></li>
               <li><a href="/auth/logout">Sign out</a></li>
             {% endif %}
           </ul>
