@@ -2,15 +2,20 @@
 
 {%- block container -%}
 <h1>My Medications</h1>
+<div class="row">
+  <div class="col-sm-6 col-md-4">
 {% for m in meds %}
-<div class='container'>
-	<h2>{{m.Medicine.name}}</h2>
-	{% if m.amount == 1 %}
-		<h3> You Should Take {{m.MedicineUser.amount}} Pill Of <i>{{m.Medicine.name}}</i> {{m.MedicineUser.intake}}</h3>
-	{% else %}
-		<h3> You Should Take {{m.MedicineUser.amount}} Pills Of <i>{{m.Medicine.name}}</i> {{m.MedicineUser.intake}}</h3>
-	{% endif %}
-	<h3> Your Notes: {{m.MedicineUser.notes}}</h3>
-</div>
-{% endfor %}
+    <div class="thumbnail">
+      <div class="caption">
+          <h3>{{m.Medicine.name}}<h5>{{m.MedicineUser.amount }}{{ m.MedicineUser.amount_type}} - {{m.MedicineUser.intake}}</h5></h3>
+          <p>{{m.MedicineUser.notes}}</p>
+          <p>
+              <a href="http://www.lyfjabokin.is/Lyf/{{m.Medicine.shortname}}/" class="btn btn-primary" role="button" target="_blank">Info</a>
+              <a href="{{ url_for('medication.deleteUsers', id=m.Medicine.id) }}" class="pull-right btn btn-danger" role="button">Delete</a>
+          </p>
+
+    </div>
+    </div>
+{% endfor %}</div>
+    </div>
 {% endblock %}

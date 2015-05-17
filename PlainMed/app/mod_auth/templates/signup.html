@@ -1,26 +1,12 @@
 {% extends "base.html" %}
 {%- block container -%}
+{% from "formhelper.html" import render_field2 %}
 <form action="{{url_for('auth.signup')}}" method="post" class="form-signin">
   <h2 class="form-signin-heading">Signup</h2>
-  {% for message in get_flashed_messages() %}
-    <div class="alert alert-danger alert-dismissible" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>Error! </strong>{{ message }}
-    </div>
-  {% endfor %}
-  <div class="form-group">
-    <label for="username" class="sr-only">Username</label>
-    {{ form.username(class="form-control", placeholder="Username") }}
-  </div>
-  <div class="form-group">
-    <label for="password" class="sr-only">Password</label>
-    {{ form.password(class="form-control", placeholder="Password") }}
-  </div>
 
-   <div class="form-group">
-    <label for="password" class="sr-only">Password again</label>
-    {{ form.password_again(class="form-control", placeholder="Password again") }}
-  </div>
+  {{render_field2(form.username) }}
+  {{ render_field2(form.password) }}
+    {{ render_field2(form.password_again) }}
   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
   <br>
   <p> or <a href="{{ url_for('auth.login')}}">Login</a></p>

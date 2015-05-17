@@ -17,7 +17,8 @@ DATABASE_CONNECT_OPTIONS = {}
 THREADS_PER_PAGE = 2
 
 # Enable protection agains *Cross-site Request Forgery (CSRF)*
-CSRF_ENABLED     = True
+CSRF_ENABLED     = False
+WTF_CSRF_ENABLED = False
 
 # Use a secure, unique and absolutely secret key for
 # signing the data. 
@@ -25,9 +26,5 @@ CSRF_SESSION_KEY = "crazya$$_ultimate-secret-key"
 
 # Secret key for signing cookies
 SECRET_KEY = "Yet-another-ultimate-secret-key-NSA-proofed"
-
-# Flask-user
-USER_LOGIN_URL = '/auth/login'
-USER_LOGOUT_URL = '/auth/logout'
 
 del os

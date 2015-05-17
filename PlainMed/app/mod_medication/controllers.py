@@ -28,11 +28,11 @@ def addmeds(medication):
     if gotMed is None:
         return abort(404)
 
-    form = RegistrationForm(request.form)
+    form = RegistrationForm()
 
-    if request.method == 'POST':
-        print("Valid Med")
-        newMed = MedicineUser(g.user.id, gotMed.id, form.amount.data, form.intake.data, form.notes.data)
+
+    if form.validate_on_submit():
+        newMed = MedicineUser(g.user.id, gotMed.id, form.amount.data, form.amount_type.data, form.intake.data, form.notes.data)
         db.session.add(newMed)
         db.session.commit()
         return redirect(url_for(".mymeds"))
@@ -49,3 +49,11 @@ def mymeds():
         .join(Medicine)
 
     return render_template('mymedications.html', meds=medications)
+
+@mod_medication.route('/deleteUsers/<int:id>')
+@login_required
+def deleteUsers(id):
+    mymedication = MedicineUser.query.filter_by(med=id).first()
+    db.session.delete(mymedication)
+    db.session.commit()
+    return redirect(url_for("medication.mymeds"))

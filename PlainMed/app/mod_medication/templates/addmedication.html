@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
 {%- block container -%}
-<h1> {{med.name}} </h1>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h1> {{med.name}} </h1>
 
-{% from "formhelper.html" import render_field %}
-<form method=post action="{{ url_for('medication.addmeds', medication=med.shortname)}}">
-  <dl>
-    {{ render_field(form.amount) }}
-    {{ render_field(form.intake) }}
-    {{ render_field(form.notes) }}
-  </dl>
-  <p><input type=submit value='Add To My Meds'>
-</form>
 
+        {% from "formhelper.html" import render_field2 %}
+        <form method=post action="{{ url_for('medication.addmeds', medication=med.shortname)}}">
+            {{render_field2(form.amount) }}
+            {{render_field2(form.amount_type) }}
+            {{render_field2(form.intake) }}
+            {{render_field2(form.notes) }}
+
+          <p><input type=submit value='Add medications'>
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
 {% endblock %}
