@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request
 from app.mod_auth.forms import LoginForm, SignupForm
 from app.mod_auth.models import User
 from flask.ext.login import login_user, logout_user, login_required
@@ -19,8 +19,6 @@ def login():
         if user and check_password_hash(user.password, request.form["password"]):
             login_user(user, remember=rememberme)
             return redirect(url_for("index.index"))
-        else:
-            flash("Wrong username/password")
 
     return render_template("login.html", form=form)
 
@@ -35,17 +33,13 @@ def signup():
         newPassword2 = request.form["password_again"]
 
         checkUser = User.query.filter_by(username=newUsername).first()
-        if checkUser:
-            flash("This username exists!")
-        else:
+        if checkUser is None:
             if newPassword == newPassword2:
                 newUser = User(newUsername, newPassword)
                 db.session.add(newUser)
                 db.session.commit()
 
                 return redirect(url_for("auth.login"))
-            else:
-                flash("The password doesn't match")
 
     return render_template("signup.html", form=form)
 

@@ -5,8 +5,15 @@
     <div class="col-md-4"></div>
     <div class="col-md-4">
         <h1> {{med.name}} </h1>
-
-
+        {% with msgs = get_flashed_messages() %}
+        {% if msgs %}
+          {%- for msg in msgs %}
+            <div class="alert alert-info">
+              {{ msg }}
+            </div>
+          {% endfor -%}
+        {% endif %}
+      {% endwith %}
         {% from "formhelper.html" import render_field2 %}
         <form method=post action="{{ url_for('medication.addmeds', medication=med.shortname)}}">
             {{render_field2(form.amount) }}

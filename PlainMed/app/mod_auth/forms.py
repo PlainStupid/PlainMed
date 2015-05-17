@@ -27,3 +27,9 @@ class SignupForm(Form):
     password = PasswordField('Password', [validators.DataRequired(),
                                           validators.EqualTo('password_again', message='Passwords must match')])
     password_again = PasswordField('Password again', [validators.DataRequired()])
+
+
+    def validate_username(form, field):
+        user = User.query.filter(User.username==form.username.data).first()
+        if user is not None:
+            raise ValidationError("This username exist")
