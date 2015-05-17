@@ -4,6 +4,7 @@ from flask import Flask, flash, redirect, url_for, request, get_flashed_messages
 from flask.ext.login import LoginManager, current_user, login_user, logout_user, login_required
 import rlcompleter, pdb
 from flask.ext.sqlalchemy import SQLAlchemy
+import jinja2
 
 app = Flask(__name__)
 app.config.from_object("config")
@@ -17,14 +18,19 @@ db = SQLAlchemy(app)
 def not_found(error):
 	return render_template("404.html"), 404
 
-
 from app.mod_auth.models import User
 
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
 
-import jinja2
+
+# Just redirect to login without giving next=args
+@login_manager.unauthorized_handler
+def unauthorized():
+    # do stuff
+    return redirect(url_for("auth.login"))
+
 template_dir = './templates'
 loader = jinja2.FileSystemLoader(template_dir)
 environment = jinja2.Environment(loader=loader)
