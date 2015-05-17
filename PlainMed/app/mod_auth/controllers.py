@@ -24,6 +24,11 @@ def login():
 
 @mod_auth.route("/signup", methods=["GET", "POST"])
 def signup():
+	form = SignupForm()
+
+	if request.method == "POST":
+		pass
+		
 	newUser = User("ragnar", "ragnar")
 	db.session.add(newUser)
 	db.session.commit()
