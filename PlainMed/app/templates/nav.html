@@ -5,7 +5,8 @@
         </div>
         <div>
           <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('index.mymeds') }}">MyMeds</a></li>
+              <li><a href="{{ url_for('medication.index') }}">Add meds</a></li>
+              <li><a href="{{ url_for('medication.mymeds') }}">My meds</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if not g.user.is_authenticated() %}

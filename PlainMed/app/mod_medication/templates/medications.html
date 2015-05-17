@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{%- block container -%}
+<h1> Medications</h1>
+<div class='container'>
+	<div class="row" id="list">
+		{% for medication in data %}
+			<div class="col-md-4"><a href="{{ url_for('medication.addmeds', medication=medication.shortname)}}" class='cell'>{{medication.name}}</a></div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}

@@ -4,7 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import urllib
 import re
 from app import db
-from app.mod_index.models import Medicine
+from app.mod_medication.models import Medicine
 
 
 # http://www.lyfjabokin.is/Lyf/Abilify/

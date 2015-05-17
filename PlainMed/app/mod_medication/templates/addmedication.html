@@ -4,7 +4,7 @@
 <h1> {{med.name}} </h1>
 
 {% from "formhelper.html" import render_field %}
-<form method=post action="/Med/{{med.shortname}}">
+<form method=post action="{{ url_for('medication.addmeds', medication=med.shortname)}}">
   <dl>
     {{ render_field(form.amount) }}
     {{ render_field(form.intake) }}
