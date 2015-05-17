@@ -1,10 +1,7 @@
-from flask import Blueprint, render_template, abort, request, redirect, url_for, g
-from flask.ext.login import LoginManager, current_user, login_user, logout_user, login_required
-from bs4 import BeautifulSoup
-import urllib.request
-from wtforms import Form, IntegerField, TextField, PasswordField, validators, SelectField
+from flask import Blueprint, render_template, abort, redirect, url_for, g
+from flask.ext.login import login_required
 from app import db
-from app.mod_medication.models import MedicineUser, Medicine, MedicineConflict
+from app.mod_medication.models import MedicineUser, Medicine
 
 from app.mod_medication.forms import RegistrationForm
 
@@ -30,9 +27,9 @@ def addmeds(medication):
 
     form = RegistrationForm()
 
-
     if form.validate_on_submit():
-        newMed = MedicineUser(g.user.id, gotMed.id, form.amount.data, form.amount_type.data, form.intake.data, form.notes.data)
+        newMed = MedicineUser(g.user.id, gotMed.id, form.amount.data, form.amount_type.data, form.intake.data,
+                              form.notes.data)
         db.session.add(newMed)
         db.session.commit()
         return redirect(url_for(".mymeds"))
@@ -44,11 +41,10 @@ def addmeds(medication):
 @mod_medication.route('/mymeds')
 @login_required
 def mymeds():
-    medications = db.session.query(
-        MedicineUser, Medicine)\
-        .join(Medicine)
+    medications = db.session.query(MedicineUser, Medicine).join(Medicine)
 
     return render_template('mymedications.html', meds=medications)
+
 
 @mod_medication.route('/deleteUsers/<int:id>')
 @login_required

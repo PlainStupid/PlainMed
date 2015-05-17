@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, render_template, abort, redirect, url_for, request, flash, session, g
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from app.mod_auth.forms import LoginForm, SignupForm
 from app.mod_auth.models import User
-from flask.ext.login import LoginManager, current_user, login_user, logout_user, login_required
-from werkzeug import check_password_hash, generate_password_hash
+from flask.ext.login import login_user, logout_user, login_required
+from werkzeug import check_password_hash
 from app import db
 
 mod_auth = Blueprint("auth", __name__, url_prefix="/auth", template_folder="templates")

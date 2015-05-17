@@ -1,5 +1,4 @@
 from app import db
-from app.mod_auth.models import User
 
 
 class Medicine(db.Model):
@@ -28,6 +27,7 @@ class MedicineUser(db.Model):
         self.amount_type = amount_type
         self.intake = intake
         self.notes = notes
+
 
 class MedicineConflict(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
