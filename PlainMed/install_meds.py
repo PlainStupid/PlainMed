@@ -4,7 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import urllib
 import re
 from app import db
-from app.mod_med.models import Medicine
+from app.mod_index.models import Medicine
 
 
 # http://www.lyfjabokin.is/Lyf/Abilify/
@@ -19,11 +19,11 @@ def main():
     for med in medicine:
         regMed = re.compile(medicalRegex, re.I|re.VERBOSE|re.M)
         medName = regMed.match(med).group("Medicine")
-        newList.add(medName.strip().replace(" ", ""))
+        newList.add(medName.strip())
 
     sortedMeds = sorted(newList)
     for x in sortedMeds:
-        newMed = Medicine(x)
+        newMed = Medicine(x, str(x).replace(" ", ""))
         db.session.add(newMed)
 
     db.session.commit()

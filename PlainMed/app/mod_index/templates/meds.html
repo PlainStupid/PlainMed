@@ -5,7 +5,7 @@
 <div class='container'>
 	<div class="row" id="list">
 		{% for d in data %}
-			<div class="col-md-4"><a href='Med/{{d}}' class='cell'>{{d.string}}</a></div>
+			<div class="col-md-4"><a href='Med/{{d.shortname}}' class='cell'>{{d.name}}</a></div>
 		{% endfor %}
 	</div>
 </div>

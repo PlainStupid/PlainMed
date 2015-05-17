@@ -1,10 +1,10 @@
 {% extends "home.html" %}
 
 {% block content %} 
-<h1> {{med}} </h1>
+<h1> {{med.name}} </h1>
 
 {% from "formhelper.html" import render_field %}
-<form method=post action="/Med/{{med}}">
+<form method=post action="/Med/{{med.shortname}}">
   <dl>
     {{ render_field(form.amount) }}
     {{ render_field(form.intake) }}
