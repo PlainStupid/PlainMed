@@ -7,7 +7,7 @@
 {% for m in meds %}
     <div class="thumbnail">
       <div class="caption">
-          <h3>{{m.Medicine.name}}<h5>{{m.MedicineUser.amount }}{{ m.MedicineUser.amount_type}} - {{m.MedicineUser.intake}}</h5></h3>
+          <h3>{{m.Medicine.name}}<br><small>{{m.MedicineUser.amount }}{{ m.MedicineUser.amount_type}} - {{m.MedicineUser.intake}}</small></h3>
           <p>{{m.MedicineUser.notes}}</p>
           <p>
               <a href="http://www.lyfjabokin.is/Lyf/{{m.Medicine.shortname}}/" class="btn btn-primary" role="button" target="_blank">Info</a>
