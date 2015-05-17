@@ -13,12 +13,19 @@ def login():
 	form = LoginForm()
 
 	if request.method == 'POST':
-		user = User.query.filter_by(username=request.form['username']).first()
-		if user and check_password_hash(user.password, request.form["password"]):
-			login_user(user)
-			return redirect(url_for("index.index"))
+		if request.form["username"] is "":
+			flash("Username is needed")
+
+		elif request.form["password"] is "":
+			flash("Password is needed")
 		else:
-			flash("Wrong username/password")
+			rememberme = True if "remember_me" in request.form else False
+			user = User.query.filter_by(username=request.form['username']).first()
+			if user and check_password_hash(user.password, request.form["password"]):
+				login_user(user, remember=rememberme)
+				return redirect(url_for("index.index"))
+			else:
+				flash("Wrong username/password")
 
 	return render_template("login.html", form=form)
 
@@ -31,18 +38,23 @@ def signup():
 		newPassword = request.form["password"]
 		newPassword2 = request.form["password_again"]
 
-		checkUser = User.query.filter_by(username=newUsername).first()
-		if checkUser:
-			flash("This username exists!")
+		if newUsername is "":
+			flash("Username is needed")
+		elif newPassword is "" or newPassword2 is "":
+			flash("Both password fields are needed")
 		else:
-			if newPassword==newPassword2:
-				newUser = User(newUsername, newPassword)
-				db.session.add(newUser)
-				db.session.commit()
-
-				return redirect(url_for("auth.login"))
+			checkUser = User.query.filter_by(username=newUsername).first()
+			if checkUser:
+				flash("This username exists!")
 			else:
-				flash("The password doesn't match")
+				if newPassword==newPassword2:
+					newUser = User(newUsername, newPassword)
+					db.session.add(newUser)
+					db.session.commit()
+
+					return redirect(url_for("auth.login"))
+				else:
+					flash("The password doesn't match")
 
 	return render_template("signup.html", form=form)
 
