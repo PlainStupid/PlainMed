@@ -8,8 +8,14 @@
     <div class="container">
       <h1>Please login</h1>
       <br>
+      {% for message in get_flashed_messages() %}
+          <div data-alert class="alert-box alert radius">
+            {{ message }}
+            <a href="#" class="close">&times;</a>
+          </div>
+        {% endfor %}
       <form action="{{url_for('auth.login')}}" method="post">
-        {{ form.hidden_tag() }}
+        
         <div class="form-group">
           {{ form.username(class="form-control", placeholder="Username") }}
         </div>

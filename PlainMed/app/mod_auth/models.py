@@ -1,13 +1,13 @@
 from app import db
 from werkzeug import check_password_hash, generate_password_hash
+from flask.ext.login import UserMixin
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 	id = db.Column(db.Integer(), primary_key=True)
 	username = db.Column(db.String(128), nullable=False, unique=True)
 	password = db.Column(db.String(192), nullable=False)
 
 	def __init__(self, username, password):
-
 		self.username = username
 		self.password = generate_password_hash(password)
 
@@ -24,4 +24,4 @@ class User(db.Model):
 		return False
 
 	def get_id(self):
-		return unicode(self.id)
+		return self.id

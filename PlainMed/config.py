@@ -25,3 +25,9 @@ CSRF_SESSION_KEY = "crazya$$_ultimate-secret-key"
 
 # Secret key for signing cookies
 SECRET_KEY = "Yet-another-ultimate-secret-key-NSA-proofed"
+
+# Flask-user
+USER_LOGIN_URL = '/auth/login'
+USER_LOGOUT_URL = '/auth/logout'
+
+del os
