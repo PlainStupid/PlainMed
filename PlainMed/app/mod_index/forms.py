@@ -6,4 +6,4 @@ class RegistrationForm(Form):
     amount = IntegerField('Amount', [validators.required(), validators.NumberRange(min=1)])
     intake = SelectField('Intake', choices=[('Daily', 'Daily'), ('Every Other Day', 'Every other day'),
                                              ('Weekly', 'Weekly'), ('By Need', 'By need')])
-    notes = TextField('Notes', [validators.optional()])
+    notes = StringField('Notes', [validators.optional()])

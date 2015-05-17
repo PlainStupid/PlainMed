@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 from wtforms import Form, IntegerField, TextField, PasswordField, validators, SelectField
 from app import db
-from app.mod_index.models import MedicineUser, Medicine
+from app.mod_index.models import MedicineUser, Medicine, MedicineConflict
 
 from app.mod_index.forms import RegistrationForm
 
@@ -44,6 +44,11 @@ def med(medication):
 @mod_index.route('mymeds')
 @login_required
 def mymeds():
-    medications=MedicineUser.query.filter_by(user=g.user.id)
+    #medications=MedicineUser.query.join(Medicine.id==MedicineUser.med).filter_by(user=g.user.id)
+    medications = db.session.query(
+        MedicineUser, Medicine)\
+        .join(Medicine)
+
+
 
     return render_template('mymeds.html', meds=medications)

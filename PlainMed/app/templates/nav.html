@@ -1,19 +1,19 @@
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">PlainMed</a>
+          <a class="navbar-brand" href="{{ url_for('index.index') }}">PlainMed</a>
         </div>
         <div>
           <ul class="nav navbar-nav">
-            <li><a href="/mymeds">MyMeds</a></li>
+            <li><a href="{{ url_for('index.mymeds') }}">MyMeds</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if not g.user.is_authenticated() %}
-              <li><a href="/auth/login">Sign In</a></li>
-              <li><a href="/auth/signup">Sign Up</a></li>
+              <li><a href="{{ url_for('auth.login') }}">Sign In</a></li>
+              <li><a href="{{ url_for('auth.signup') }}">Sign Up</a></li>
             {% else %}
               <li><a>Logged in as: {{g.user.username}}</a></li>
-              <li><a href="/auth/logout">Sign out</a></li>
+              <li><a href="{{ url_for('auth.logout') }}">Sign out</a></li>
             {% endif %}
           </ul>
         </div>

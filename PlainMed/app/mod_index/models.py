@@ -26,3 +26,12 @@ class MedicineUser(db.Model):
         self.amount = amount
         self.intake = intake
         self.notes = notes
+
+class MedicineConflict(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    med = db.Column(db.Integer(), db.ForeignKey('medicine.id', ondelete='CASCADE'))
+    conflict = db.Column(db.Integer(), db.ForeignKey('medicine.id', ondelete='CASCADE'))
+
+    def __init__(self, med, conflict):
+        self.med = med
+        self.conflict = conflict
