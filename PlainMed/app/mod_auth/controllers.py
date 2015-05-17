@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, abort, redirect, url_for, request, flash, session, g
-from app.mod_auth.forms import LoginForm
+from app.mod_auth.forms import LoginForm, SignupForm
 from app.mod_auth.models import User
 from flask.ext.login import LoginManager, current_user, login_user, logout_user, login_required
 from werkzeug import check_password_hash, generate_password_hash
@@ -27,13 +27,24 @@ def signup():
 	form = SignupForm()
 
 	if request.method == "POST":
-		pass
-		
-	newUser = User("ragnar", "ragnar")
-	db.session.add(newUser)
-	db.session.commit()
+		newUsername = request.form["username"]
+		newPassword = request.form["password"]
+		newPassword2 = request.form["password_again"]
 
-	return redirect(url_for("auth.login"))
+		checkUser = User.query.filter_by(username=newUsername).first()
+		if checkUser:
+			flash("This username exists!")
+		else:
+			if newPassword==newPassword2:
+				newUser = User(newUsername, newPassword)
+				db.session.add(newUser)
+				db.session.commit()
+
+				return redirect(url_for("auth.login"))
+			else:
+				flash("The password doesn't match")
+
+	return render_template("signup.html", form=form)
 
 @mod_auth.route('/logout/')
 @login_required
