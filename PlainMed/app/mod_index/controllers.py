@@ -32,7 +32,7 @@ def med(medication):
 
     if request.method == 'POST':
         print("Valid Med")
-        newMed = MedicineUser(g.user.id, medication, form.amount.data, form.intake.data, form.notes.data)
+        newMed = MedicineUser(g.user.id, gotMed.id, form.amount.data, form.intake.data, form.notes.data)
         db.session.add(newMed)
         db.session.commit()
         return redirect(url_for("index.mymeds"))
