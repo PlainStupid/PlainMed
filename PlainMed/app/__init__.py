@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 
 @app.errorhandler(404)
 def not_found(error):
-	return render_template("404.html"), 404
+	return render_template("404.html", user=current_user), 404
 
 from app.mod_auth.models import User
 

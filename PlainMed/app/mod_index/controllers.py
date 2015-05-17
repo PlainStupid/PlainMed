@@ -21,7 +21,7 @@ def getMeds():
 @mod_index.route("/")
 @login_required
 def index():
-    return render_template('meds.html', data=getMeds())
+    return render_template('meds.html', data=getMeds(), user=current_user)
 
 # Page for each medication, for registering meds to your own list
 @mod_index.route('Med/<medication>', methods=['GET', 'POST'])
@@ -29,7 +29,7 @@ def index():
 def med(medication):
 
 	if medication not in getMeds():
-		return render_template('404.html')
+		return render_template('404.html', user=current_user)
 
 	form = RegistrationForm(request.form)
 
@@ -37,15 +37,15 @@ def med(medication):
 		newMed = Med(str(current_user), medication, form.amount.data, form.intake.data, form.notes.data)
 		db.session.add(newMed)
 		db.session.commit()
-		return render_template('mymeds.html', meds=Med.query.filter_by(user=str(current_user)))
+		return render_template('mymeds.html', meds=Med.query.filter_by(user=str(current_user)), user=current_user)
 
-	return render_template('med.html', med=medication, form=form)
+	return render_template('med.html', med=medication, form=form, user=current_user)
 
 # display the meds that the user has registered
 @mod_index.route('mymeds')
 @login_required
 def mymeds():
-	return render_template('mymeds.html', meds=Med.query.filter_by(user=str(current_user)))
+	return render_template('mymeds.html', meds=Med.query.filter_by(user=str(current_user)), user=current_user)
 
 # The Form that is filled to register new meds
 class RegistrationForm(Form):
