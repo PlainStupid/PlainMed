@@ -6,6 +6,8 @@ from wtforms import Form, IntegerField, TextField, PasswordField, validators, Se
 from app import db
 from app.mod_index.models import Med
 
+from app.mod_index.forms import RegistrationForm
+
 mod_index = Blueprint("index", __name__, url_prefix="/", template_folder="templates")
 
 # Helper function for scraping lyfjaver for medications
@@ -46,9 +48,3 @@ def med(medication):
 @login_required
 def mymeds():
 	return render_template('mymeds.html', meds=Med.query.filter_by(user=str(current_user)))
-
-# The Form that is filled to register new meds
-class RegistrationForm(Form):
-    amount = IntegerField('Amount', [validators.required(), validators.NumberRange(min=1)])
-    intake = SelectField(u'Intake', choices=[('Daily', 'Daily'), ('Every Other Day', 'Every other day'), ('Wekkly', 'Weekly'), ('By Need', 'By need')])
-    notes = TextField('Notes', [validators.optional()])
