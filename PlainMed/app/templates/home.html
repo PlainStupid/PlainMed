@@ -1,14 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<title>Plain Medicine</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mycss.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% extends "base.html" %}
 
+{% block container %}
+<head>
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -16,14 +9,19 @@
         </div>
         <div>
           <ul class="nav navbar-nav">
-            <li><a href="/SignIn">Sign In</a></li>
-            <li><a href="/SignUp">Sign Up</a></li>
+            <li><a href="/mymeds">MyMeds</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/auth/login">Sign In</a></li>
+            <li><a href="/auth/signup">Sign Up</a></li>
           </ul>
         </div>
       </div>
     </nav>
 </head>
+
 <body>
 
     {% block content %}{% endblock %}
 </body>
+{% endblock %}
