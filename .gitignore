@@ -9,6 +9,8 @@ __pycache__/
 .idea
 
 # Distribution / packaging
+PlainMed/bin
+PlainMed/include
 .Python
 env/
 build/
