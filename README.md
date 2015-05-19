@@ -3,7 +3,7 @@ PlainMed is the ultimate personal medicine diary. Users can add their medicine t
 webpage and be able to read more information about it through Lyfjabókin.is
 
 ## Install
-To install user should first install the environment needed to run
+To install, user should first install the environment needed to run.
 Prerequest is Python 3 (3.4.3 works perfectly)
 
 ```
