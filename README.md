@@ -8,7 +8,7 @@ To install, user should first install the environment needed to run.
 Prerequest is Python 3 (3.4.3 works perfectly)
 
 ```
-virtualenv
+virtualenv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
