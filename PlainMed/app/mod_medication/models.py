@@ -4,11 +4,16 @@ from app import db
 class Medicine(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
-    shortname = db.Column(db.String(), nullable=False, unique=True)
+    link = db.Column(db.String(), nullable=True)
+    chemical = db.Column(db.String(), nullable=True)
+    medtype = db.Column(db.String(), nullable=True)
 
-    def __init__(self, name, shortname):
+
+    def __init__(self, name, link, chemical, medtype):
         self.name = name
-        self.shortname = shortname
+        self.link = link
+        self.chemical = chemical
+        self.medtype = medtype
 
 
 class MedicineUser(db.Model):

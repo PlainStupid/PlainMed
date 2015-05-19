@@ -5,7 +5,7 @@
 <div class='container'>
 	<div class="row" id="list">
 		{% for medication in data %}
-			<div class="col-md-3"><a href="{{ url_for('medication.addmeds', medication=medication.shortname)}}" class='cell'>{{medication.name}}</a></div>
+			<div class="col-md-3"><a href="{{ url_for('medication.addmeds', medication=medication.link)}}" class='cell'>{{medication.name}}</a></div>
 		{% endfor %}
 	</div>
 </div>

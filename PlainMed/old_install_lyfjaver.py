@@ -5,8 +5,6 @@ import re
 from app import db
 from app.mod_medication.models import Medicine
 
-
-
 # http://www.lyfjabokin.is/Lyf/Abilify/
 
 # This regex works in most cases
@@ -25,7 +23,7 @@ def main():
 
     sortedMeds = sorted(newList)
     for x in sortedMeds:
-        newMed = Medicine(x, str(x).replace(" ", ""))
+        newMed = Medicine(x, str(x).replace(" ", ""), "", "")
         db.session.add(newMed)
 
     db.session.commit()

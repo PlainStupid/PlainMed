@@ -15,7 +15,7 @@
         {% endif %}
       {% endwith %}
         {% from "formhelper.html" import render_field2 %}
-        <form method=post action="{{ url_for('medication.addmeds', medication=med.shortname)}}">
+        <form method=post action="{{ url_for('medication.addmeds', medication=med.link)}}">
             {{render_field2(form.amount) }}
             {{render_field2(form.amount_type) }}
             {{render_field2(form.intake) }}

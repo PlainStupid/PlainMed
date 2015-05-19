@@ -11,16 +11,16 @@ mod_medication = Blueprint("medication", __name__, url_prefix="/medicine", templ
 @mod_medication.route("/")
 @login_required
 def index():
-    medications = Medicine.query.all()
+    medications = Medicine.query.order_by(Medicine.name).all()
 
     return render_template('medications.html', data=medications)
 
 
 # Page for each medication, for registering meds to your own list
-@mod_medication.route('/med/<medication>', methods=['GET', 'POST'])
+@mod_medication.route('/add/<medication>', methods=['GET', 'POST'])
 @login_required
 def addmeds(medication):
-    gotMed = Medicine.query.filter_by(shortname=medication).first()
+    gotMed = Medicine.query.filter_by(link=medication).first()
 
     if gotMed is None:
         return abort(404)
@@ -32,8 +32,13 @@ def addmeds(medication):
         if hasbefore:
             flash("You have already added this before")
         else:
-            newMed = MedicineUser(g.user.id, gotMed.id, form.amount.data, form.amount_type.data, form.intake.data,
-                                  form.notes.data)
+            newMed = MedicineUser(g.user.id, 
+                                    gotMed.id, 
+                                    form.amount.data, 
+                                    form.amount_type.data, 
+                                    form.intake.data,
+                                    form.notes.data)
+            
             db.session.add(newMed)
             db.session.commit()
             return redirect(url_for(".mymeds"))

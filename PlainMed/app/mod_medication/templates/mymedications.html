@@ -10,7 +10,7 @@
           <h3>{{m.Medicine.name}}<br><small>{{m.MedicineUser.amount }}{{ m.MedicineUser.amount_type}} - {{m.MedicineUser.intake}}</small></h3>
           <p>{{m.MedicineUser.notes}}</p>
           <p>
-              <a href="http://www.lyfjabokin.is/Lyf/{{m.Medicine.shortname}}/" class="btn btn-primary" role="button" target="_blank">Info</a>
+              <a href="http://www.lyfjabokin.is/Lyf/{{m.Medicine.link}}/" class="btn btn-primary" role="button" target="_blank">Info</a>
               <a href="{{ url_for('medication.deleteUsers', id=m.Medicine.id) }}" class="pull-right btn btn-danger" role="button">Delete</a>
           </p>
 
