@@ -26,7 +26,7 @@ Now you have two posibilities. You can run either scripts but not both.
 ## Run
 Now here comes the hardest part.
 
-Run following command
+Run following command:
 ```
 python run.py
 ```

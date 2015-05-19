@@ -3,9 +3,12 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import re
 import sys
+import urllib
 
 from app import db
-from app.mod_medication.models import Medicine
+from app.mod_medication.models import Medicine, MedicineConflict
+
+myheader = {"Content-Type":"text/html; charset=utf-8"}
 
 try:
 	driver = webdriver.Firefox()
@@ -77,9 +80,51 @@ print("Adding to database")
 for x in medicineList:
 	newMedicine = Medicine(x, medicineList[x]["link"], medicineList[x]["chemical"], medicineList[x]["type"])
 	db.session.add(newMedicine)
+	db.session.flush()
 
 # We are done adding new medicine to the session
 # so lets commit
 db.session.commit()
 
-print("Done")
+
+print("Gathering medicine conflicts")
+
+
+conflicts = []
+#conflict = [Medicine, ConflictMedicine, ConflictMedicineLink]
+for med in medicineList:
+	if medicineList[med]["link"] != "":
+		print("Getting %s info" % med)
+		url = "http://www.lyfjabokin.is/Lyf/%s/" % medicineList[med]["link"]
+		req = urllib.request.Request(url, headers=myheader)
+		response = urllib.request.urlopen(req)
+		bsoup = BeautifulSoup(response.read().decode('utf-8'))
+
+		allConflicts = bsoup.find("div", {"class":"crossEffect1Container minimized"})
+		if allConflicts:
+			currList = allConflicts.find("ul", {"class":"sp"})
+
+			if currList:
+				li = currList.findAll("li")
+				for meds in li:
+					#print(meds.find("a")["href"])
+					currConflict = meds.find("a")
+					conflicts.append([str(med), str(currConflict.string), currConflict["href"]])
+
+
+print("Putting conflicts to database")
+
+# Run through our conflict list
+for med in conflicts:
+	# Get medicine we like to add conflicts to
+	getMed = db.session.query(Medicine).filter(Medicine.name==med[0]).first()
+	# if it exist then check if the other drug is in database
+	if getMed:
+		confMed = db.session.query(Medicine).filter(Medicine.name==med[1]).first()
+		if confMed:
+			#Create new conflict
+			newConf = MedicineConflict(getMed.id, confMed.id)
+			db.session.add(newConf)
+			db.session.flush()
+
+db.session.commit()

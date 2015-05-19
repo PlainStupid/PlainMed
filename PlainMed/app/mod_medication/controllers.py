@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, abort, redirect, url_for, g, flash
 from flask.ext.login import login_required
 from app import db
-from app.mod_medication.models import MedicineUser, Medicine
+from app.mod_medication.models import MedicineUser, Medicine, MedicineConflict
 
 from app.mod_medication.forms import RegistrationForm
 
@@ -28,10 +28,15 @@ def addmeds(medication):
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        hasbefore = MedicineUser.query.filter(MedicineUser.med==gotMed.id).first()
+        #hasbefore = MedicineUser.query.filter(MedicineUser.med==gotMed.id).first()
+        
+        getAllFromUser = MedicineUser.query.filter_by(user=g.user.id).all()
+        hasbefore = True if gotMed.id in [x.med for x in getAllFromUser] else False
+
         if hasbefore:
             flash("You have already added this before")
         else:
+
             newMed = MedicineUser(g.user.id, 
                                     gotMed.id, 
                                     form.amount.data, 
